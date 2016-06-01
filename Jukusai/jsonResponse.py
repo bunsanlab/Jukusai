@@ -2,10 +2,6 @@ from django.http import HttpResponse
 import json
 
 class JSONResponse(HttpResponse):
-    """
-    An HttpResponse that renders its content into JSON.
-    @author: Yatuhashi
-    """
     def __init__(self, data, token, **kwargs):
         if 'paginate' not in data:
             content = json.dumps({'data': data}, ensure_ascii=False, indent=2)
