@@ -22,7 +22,7 @@ eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 ```
 
-###本体のインストールとpython3.5
+#####本体のインストールとpython3.5
 
 ```
 pyenv install 3.5.0
@@ -30,8 +30,29 @@ pyenv virtualenv 3.5.0 jukusai
 git clone https://github.com/Alice-tech/AliceAnimeServer.git
 ```
 
-###pythonライブラリ
+#####pythonライブラリ
 
 ```
 pip install -r requrements.txt
+```
+
+###テスト
+
+* DB初期化
+
+```
+python manage.py migrate
+```
+
+* スーパーユーザー作成
+
+```
+python manage.py createsuperuser
+```
+
+
+* テストサーバー起動
+
+```
+python manage.py runserver
 ```
