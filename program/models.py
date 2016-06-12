@@ -7,6 +7,11 @@ class place(models.Model):
     placeName        = models.CharField(max_length=255, blank=True)
     room             = models.CharField(max_length=255, blank=True)
 
+    def __str__(self):
+        return self.placeName
+
+    def __unicode__(self):
+        return self.placeName
 
 class program(models.Model):
     groupName        = models.CharField(max_length=255, blank=True)
@@ -22,6 +27,9 @@ class program(models.Model):
     end_at           = models.DateTimeField(null=True, blank=True)
     created_at       = models.DateTimeField(null=True, auto_now_add=True)
     updated_at       = models.DateTimeField(blank=True, null=True, auto_now=True)
+
+    def __str__(self):
+        return self.contentName
 
     def __unicode__(self):
         return self.contentName
@@ -41,7 +49,7 @@ class photo(models.Model):
 
 
 class vote(models.Model):
-    program          = models.OneToOneField(program)
+    program          = models.OneToOneField(program, unique=True)
     num              = models.IntegerField(default=0)
 
     def __unicode__(self):

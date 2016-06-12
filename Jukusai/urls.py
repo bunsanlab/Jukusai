@@ -3,6 +3,7 @@ from django.contrib import admin
 from rest_framework import routers
 
 from program.views import programViewSet,photoViewSet,placeViewSet,voteViewSet
+import program
 
 router = routers.DefaultRouter()
 router.register(r'program',programViewSet)
@@ -19,4 +20,5 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls, namespace='api')),
+
 ]

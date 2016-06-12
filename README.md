@@ -56,3 +56,40 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+
+
+#####Project Tree
+
+```
+.
+├── Jukusai
+│   ├── __init__.py
+│   ├── __init__.pyc
+│   ├── __pycache__
+│   ├── jsonResponse.py
+│   ├── paginator.py
+│   ├── settings.py
+│   ├── settings.pyc
+│   ├── urls.py
+│   └── wsgi.py
+├── README.md
+├── db.sqlite3
+├── manage.py
+├── program
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── admin.py
+│   ├── migrations
+│   ├── models.py
+│   ├── programSerializer.py
+│   ├── tests.py
+│   └── views.py
+└──requrements.txt
+
+
+6 directories, 39 files
+```
+
+
+
+

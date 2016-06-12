@@ -1,16 +1,14 @@
-from django.shortcuts import render
-
 from rest_framework import status
 from rest_framework import viewsets
-from rest_framework.decorators import list_route, detail_route
+from rest_framework.decorators import list_route
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from Jukusai.jsonResponse import JSONResponse
 
 from program.programSerializer import programSerializer, photoSerializer, placeSerializer, voteSerializer
 from program.models import program, place, photo, vote
-from Jukusai.paginator import paginate
-# Create your views here.
+
+import json
 
 
 class programViewSet(viewsets.ModelViewSet):
@@ -29,7 +27,7 @@ class programViewSet(viewsets.ModelViewSet):
 
     @list_route(renderer_classes=[JSONRenderer], methods=['get'])
     def stage(self, request):
-        data = program.objects.filter(category=1)
+        data = program.objects.filter(category=1).order_by('start_at')
         page = self.paginate_queryset(data)
         if page is not None:
             serializer = self.get_serializer(page, many=True)
@@ -93,14 +91,31 @@ class voteViewSet(viewsets.ModelViewSet):
     serializer_class = voteSerializer
 
     @list_route(methods=['post'])
-    def voteContent(self, request, pk):
+    def add(self, request, pk=None):
         try:
-            data = program.objects.get(pk=pk)
-            vote = vote.objects.get(program=data)
-            vote.num = vote.num + 1
-            vote.save()
-            serializer = self.get_serializer(vote, many=True)
+            json_str = request.body.decode('utf-8')
+            pk = json.loads(json_str)
+            pk = int(pk['pk'])
+            proId = program.objects.get(pk=pk)
+            data = vote.objects.get(program__pk=proId.pk)
+            data.num = data.num + 1
+            data.save()
+            serializer = voteSerializer(data)
             return Response(serializer.data)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    @list_route(methods=['post'])
+    def delete(self, request, pk=None):
+        try:
+            json_str = request.body.decode('utf-8')
+            pk = json.loads(json_str)
+            pk = int(pk['pk'])
+            proId = program.objects.get(pk=pk)
+            data = vote.objects.get(program__pk=proId.pk)
+            data.num = data.num - 1
+            data.save()
+            serializer = voteSerializer(data)
+            return Response(serializer.data)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
