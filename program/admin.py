@@ -1,5 +1,5 @@
 from django.contrib import admin
-from program.models import program,place,photo,vote
+from program.models import program,place,vote
 # Register your models here.
 
 class programAdmin(admin.ModelAdmin):
@@ -7,9 +7,6 @@ class programAdmin(admin.ModelAdmin):
 
 class placeAdmin(admin.ModelAdmin):
     list_display  =  ('placeName','room',)
-
-class photoAdmin(admin.ModelAdmin):
-    list_display  =  ('program','publicFlag',)
 
     def program(self,obj):
         return obj.program.contentName
@@ -23,7 +20,6 @@ class voteAdmin(admin.ModelAdmin):
 
 admin.site.register(program,programAdmin)
 admin.site.register(place,placeAdmin)
-admin.site.register(photo,photoAdmin)
 admin.site.register(vote,voteAdmin)
 
 

@@ -1,19 +1,19 @@
-from rest_framework import status
-from rest_framework import viewsets
-from rest_framework.decorators import list_route
+from rest_framework import status, viewsets
+from rest_framework.decorators import list_route, api_view
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from Jukusai.jsonResponse import JSONResponse
 
-from program.programSerializer import programSerializer, photoSerializer, placeSerializer, voteSerializer
-from program.models import program, place, photo, vote
+from program.programSerializer import programSerializer, placeSerializer, voteSerializer
+from program.models import program, place,  vote
 
 import json
 
 
-class programViewSet(viewsets.ModelViewSet):
+class programViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = program.objects.all()
     serializer_class = programSerializer
+    http_method_names = ['get']
 
     @list_route(renderer_classes=[JSONRenderer], methods=['get'])
     def get_pagenate(self, request):
@@ -76,17 +76,12 @@ class programViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-class placeViewSet(viewsets.ModelViewSet):
+class placeViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = place.objects.all()
     serializer_class = placeSerializer
 
 
-class photoViewSet(viewsets.ModelViewSet):
-    queryset = photo.objects.all()
-    serializer_class = photoSerializer
-
-
-class voteViewSet(viewsets.ModelViewSet):
+class voteViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = vote.objects.all()
     serializer_class = voteSerializer
 

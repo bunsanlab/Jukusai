@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import program,place,photo,vote
+from .models import program,place,vote
 
 class placeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -36,16 +36,11 @@ class programSimpleSerializer(serializers.HyperlinkedModelSerializer):
         model = program
         fields = ('pk', 'groupName', 'contentName', 'category',)
 
-class photoSerializer(serializers.HyperlinkedModelSerializer):
-    program = programSimpleSerializer()
-    class Meta:
-        model = photo
-        fields = ('pk', 'program', 'path', 'publicFlag', 'created_at',)
-
 
 class voteSerializer(serializers.HyperlinkedModelSerializer):
     program = programSimpleSerializer()
     class Meta:
         model = vote
         fields = ('pk', 'program', 'num',)
+
 

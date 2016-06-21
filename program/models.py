@@ -3,6 +3,11 @@ from django.db import models
 # Create your models here.
 
 
+class thumbnail(models.Model):
+    path             = models.CharField(max_length=255, blank=True)
+    updated_at       = models.DateTimeField(blank=True, null=True, auto_now=True)
+
+
 class place(models.Model):
     placeName        = models.CharField(max_length=255, blank=True)
     room             = models.CharField(max_length=255, blank=True)
@@ -39,13 +44,6 @@ class program(models.Model):
 
     class Meta:
         ordering=['created_at']
-
-
-class photo(models.Model):
-    program          = models.ForeignKey(program)
-    path             = models.CharField(max_length=255, blank=True)
-    publicFlag       = models.BooleanField(default=False)
-    created_at       = models.DateTimeField(null=True, auto_now_add=True)
 
 
 class vote(models.Model):
